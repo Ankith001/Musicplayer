@@ -1,3 +1,4 @@
+import 'package:expresso/screenfavour.dart';
 import 'package:expresso/screenhome.dart';
 import 'package:expresso/screenplaying.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +18,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
   Widget build(BuildContext context) {
     return player.builderCurrent(
       builder: (context, playing) {
-        final myAudio = find(songDetails, playing.audio.assetAudioPath);
         return Container(
-          height: 65, 
+          height: 65,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromARGB(255, 29, 99, 33),
-                  Color.fromARGB(255, 29, 99, 33)
-                ]),
+                colors: [Colors.green, Colors.black]),
           ),
           child: ListTile(
             onTap: () => Navigator.push(
@@ -37,12 +34,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
             leading: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: QueryArtworkWidget(
-                id: int.parse(myAudio.metas.id.toString()),
+                id: int.parse(playing.audio.audio.metas.id!),
                 type: ArtworkType.AUDIO,
                 // ignore: prefer_const_constructors
-                nullArtworkWidget: Icon(
-                  Icons.music_note,
-                  color: Colors.white,
+                nullArtworkWidget: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(300),
+                  ),
+                  child: Image.asset('assets/Images/apple.jpg'),
                 ),
               ),
             ),
@@ -62,23 +61,58 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 style: GoogleFonts.josefinSans(color: Colors.grey),
               ),
             ),
-            trailing: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: PlayerBuilder.isPlaying(
-                player: player,
-                builder: (context, isPlaying) {
-                  return IconButton(
-                    icon: Icon(
-                      isPlaying ? Icons.pause_circle : Icons.play_circle_fill_outlined,
-                      size: 40,
-                    ),
-                    onPressed: () {
-                      player.playOrPause();
-                    },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                //  previous
+                IconButton(
+                  onPressed: playing.index != 0
+                      ? () {
+                          player.previous();
+                        }
+                      : () {},
+                  icon: playing.index == 0
+                      ? const Icon(
+                          Icons.skip_previous_rounded,
+                          color: Colors.black45,
+                          size: 43,
+                        )
+                      : const Icon(
+                          Icons.skip_previous_rounded,
+                          color: Colors.white,
+                          size: 43,
+                        ),
+                ),
+                // play pause
+                PlayerBuilder.isPlaying(
+                  player: player,
+                  builder: (context, isPlaying) {
+                    return IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle : Icons.play_circle,
+                        size: 43,
+                      ),
+                      onPressed: () {
+                        player.playOrPause();
+                      },
+                      color: Colors.white,
+                    );
+                  },
+                ),
+
+                // next
+                IconButton(
+                  iconSize: 43,
+                  onPressed: () {
+                    player.next();
+                  },
+                  icon: const Icon(
+                    Icons.skip_next_rounded,
                     color: Colors.white,
-                  );
-                },
-              ),
+                    size: 43,
+                  ),
+                ),
+              ],
             ),
           ),
         );

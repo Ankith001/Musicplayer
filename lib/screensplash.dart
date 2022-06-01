@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FaIcon(
+              const FaIcon(
                 FontAwesomeIcons.music,
                 size: 50,
                 color:Color.fromARGB(255, 58, 136, 64)
@@ -62,19 +62,4 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 
-// Scaffold(
-//       backgroundColor: Color.fromARGB(255, 25, 21, 9),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Image.asset(
-//               'assets/Images/Splash.png',
-//               fit: BoxFit.fitHeight,
-//               cacheHeight: 200,
-//               cacheWidth: 200,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
+

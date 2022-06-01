@@ -1,114 +1,130 @@
+import 'package:expresso/privacy.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SettingsScreen extends StatelessWidget {
   // const SettingsScreen({ Key? key }) : super(key: key);
-  final Padding = EdgeInsets.symmetric(horizontal: 20);
+  // ignore: non_constant_identifier_names
+  final Padding = const EdgeInsets.symmetric(horizontal: 20);
 
-  @override 
+  const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Scaffold(
       backgroundColor: Colors.black,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SettingHeader(context),
-            SettingMenu(context),
-          ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          "Settings",
+          style: GoogleFonts.manrope(fontWeight: FontWeight.w800),
         ),
       ),
-    );
-  }
-
-  Widget SettingHeader(BuildContext context) => Container(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-      );
-  Widget SettingMenu(BuildContext context) => Column(
-        children: [
+      body: Column(
+        children: [ 
+          // ListTile(
+          //   title: Text(
+          //     'Share App',
+          //     style: GoogleFonts.raleway(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.w600,
+          //         color: Colors.white),
+          //   ),
+          //   trailing: IconButton(
+          //       onPressed: () {},
+          //       icon: const Icon(
+          //         Icons.share_outlined,
+          //         color: Colors.white,
+          //         size: 20,
+          //       )),
+          // ),
           ListTile(
-            //leading: Icon(Icons.settings_outlined,color: Colors.white,),
-            title: Text(
-              'Settings',
-              style: GoogleFonts.raleway(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 255, 255)
-              ),
-            ),
-            
-          ),
-
-          Divider(
-            thickness: 2,
-          //  color: Color.fromARGB(255, 0, 0, 0),
-          ),
-
-//=========List=====//
-
-          ListTile(
-          
-            title: Text(
-              'Share App',
-              style: GoogleFonts.raleway(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.white
-              ),
-            ),
-            trailing: Icon(Icons.share_outlined,color: Color.fromARGB(255, 255, 255, 255),size: 20),
-          ),
-          ListTile(
-            
             title: Text(
               'Privacy Policy',
               style: GoogleFonts.raleway(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                 color: Colors.white
-              ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
             ),
-            trailing: Icon(Icons.privacy_tip_outlined,color: Colors.white,size: 20),
+            trailing: IconButton(
+                onPressed: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  PolicyDialog(mdFileName: 'privacypolicy.md',),),); 
+                },
+                icon: const Icon(
+                  Icons.privacy_tip_outlined,
+                  color: Colors.white,
+                  size: 20,
+                )),
           ),
+          // ListTile(
+          //   title: Text(
+          //     'Terms and Conditions',
+          //     style: GoogleFonts.raleway(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.w600,
+          //         color: Colors.white),
+          //   ),
+          //   trailing: IconButton(
+          //       onPressed: () {},
+          //       icon: const Icon(
+          //         Icons.wysiwyg_outlined,
+          //         color: Colors.white,
+          //         size: 20,
+          //       )),
+          // ),
           ListTile(
-           
-            title: Text(
-              'Terms and Conditions',
-              style: GoogleFonts.raleway(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                 color: Colors.white
-              ),
-            ),
-             trailing: Icon(Icons.wysiwyg,color: Colors.white,size: 20),
-          ),
-
-           ListTile( 
             title: Text(
               'Rate Us',
               style: GoogleFonts.raleway(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                 color: Colors.white
-              ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
             ),
-             trailing: Icon(Icons.star_border_outlined,color: Colors.white,size: 20),
+            trailing: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.star_border_outlined,
+                  color: Colors.white,
+                  size: 20,
+                )),
           ),
-
-          ListTile( 
+          ListTile(
             title: Text(
               'About',
               style: GoogleFonts.raleway(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                 color: Colors.white
-              ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
             ),
-             trailing: Icon(Icons.info_outline_rounded,color: Colors.white,size: 20),
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const LicencePageSimple(),),);
+                },
+                icon: const Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                  size: 20,
+                )),
           ),
-        
-         
         ],
-      );
+      ),
+    );
+  }
+}
+
+
+
+class LicencePageSimple extends StatelessWidget {
+  const LicencePageSimple({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData.dark(),
+      child: const LicensePage(
+        applicationName: 'Expresso',
+        applicationVersion: '1.0',
+      ),
+    );
+  }
 }

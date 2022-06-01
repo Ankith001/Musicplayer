@@ -1,13 +1,16 @@
 import 'package:expresso/miniplayer.dart';
-import 'package:expresso/screenalbum.dart';
+
 import 'package:expresso/screenfavour.dart';
 import 'package:expresso/screenhome.dart';
 import 'package:expresso/screenplaylist.dart';
+import 'package:expresso/screensettings.dart';
 import 'package:expresso/screensplash.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:on_audio_room/on_audio_room.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  await OnAudioRoom().initRoom();
   runApp(const MyApp());
 }
 
@@ -35,7 +38,7 @@ class _HomeState extends State<Home> {
     const ScreenHome(),
     const FavoriteScreen(),
     const PlaylistScreen(),
-    const AlbumScreen(),
+    SettingsScreen(),
   ];
   int seletedindex = 0;
   @override
@@ -74,11 +77,19 @@ class _HomeState extends State<Home> {
             label: 'Playlists',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.folder_open_outlined),
-            label: 'Albums',
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
